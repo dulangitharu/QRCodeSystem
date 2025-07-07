@@ -271,6 +271,7 @@
           ctx.fillRect(x - 5, y - 5, logoSize + 10, logoSize + 10);
           ctx.drawImage(logo, x, y, logoSize, logoSize);
 
+          // Clean up object URL if used
           if (logoFile) URL.revokeObjectURL(logo.src);
 
           qrOutput.classList.add("loaded");
