@@ -248,6 +248,7 @@
         correctLevel: QRCode.CorrectLevel[errorLevel],
       });
 
+       // Add logo to QR code
       setTimeout(() => {
         const qrCanvas = document.querySelector('#qrcode canvas');
         if (!qrCanvas) return;
