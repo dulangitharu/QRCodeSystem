@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR System - Home</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Feather Icons CDN -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+      /* Custom styles for enhanced design */
+      .color-picker-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .color-picker {
+        width: 40px;
+        height: 40px;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .btn-primary {
+        transition: all 0.3s ease;
+        transform: scale(1);
+      }
+      .btn-primary:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
+      }
+      .input-focus {
+        transition: all 0.3s ease;
+      }
+      .input-focus:focus {
+        border-color: #4299E1;
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+      }
+      .qr-container {
+        transition: opacity 0.5s ease;
+        opacity: 0;
+      }
+      .qr-container.loaded {
+        opacity: 1;
+      }
+      .feature-card {
+        transition: all 0.3s ease;
+      }
+      .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 text-gray-800 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="text-2xl font-bold text-blue-600">QR System</div>
+        <div class="space-x-6 hidden md:flex">
+          <a href="#" class="text-gray-700 hover:text-blue-500 transition">Home</a>
+          <a href="#generator" class="text-gray-700 hover:text-blue-500 transition">Generate</a>
+          <a href="#" class="text-gray-700 hover:text-blue-500 transition">Scan</a>
+          <a href="#" class="text-gray-700 hover:text-blue-500 transition">About</a>
+        </div>
+        <button class="md:hidden" id="menu-btn">
+          <i data-feather="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+      <!-- Mobile Menu -->
+      <div class="md:hidden px-4 pb-4 hidden" id="mobile-menu">
+        <a href="#" class="block py-2 text-gray-700 hover:text-blue-500 transition">Home</a>
+        <a href="#generator" class="block py-2 text-gray-700 hover:text-blue-500 transition">Generate</a>
+        <a href="#" class="block py-2 text-gray-700 hover:text-blue-500 transition">Scan</a>
+        <a href="#" class="block py-2 text-gray-700 hover:text-blue-500 transition">About</a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="text-center py-20 bg-gradient-to-r from-purple-600 to-blue-500 text-white">
+      <div class="max-w-3xl mx-auto px-4">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6">Fast & Secure QR Code System</h1>
+        <p class="text-lg md:text-xl mb-8 font-light">
+          Generate and scan QR codes with ease. A modern solution for seamless identification and tracking.
+        </p>
+        <a href="#generator" class="inline-block bg-white text-purple-600 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition btn-primary">
+          Generate QR Code
+        </a>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+      <div class="max-w-6xl mx-auto px-4 text-center">
+        <h2 class="text-3xl font-extrabold mb-10 text-gray-800">Why Use Our QR System?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div class="p-6 rounded-lg border shadow-lg feature-card bg-gray-50">
+            <i data-feather="zap" class="w-12 h-12 mx-auto text-blue-500 mb-4"></i>
+            <h3 class="font-semibold text-xl mb-2 text-gray-800">Fast & Reliable</h3>
+            <p class="text-gray-600">Generate and scan codes instantly with top-notch speed and accuracy.</p>
+          </div>
+          <div class="p-6 rounded-lg border shadow-lg feature-card bg-gray-50">
+            <i data-feather="shield" class="w-12 h-12 mx-auto text-blue-500 mb-4"></i>
+            <h3 class="font-semibold text-xl mb-2 text-gray-800">Secure</h3>
+            <p class="text-gray-600">Data is protected with modern encryption and access protocols.</p>
+          </div>
+          <div class="p-6 rounded-lg border shadow-lg feature-card bg-gray-50">
+            <i data-feather="smartphone" class="w-12 h-12 mx-auto text-blue-500 mb-4"></i>
+            <h3 class="font-semibold text-xl mb-2 text-gray-800">Mobile Friendly</h3>
+            <p class="text-gray-600">Fully responsive design for any device, whether mobile or desktop.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QR Generator Section -->
+    <section id="generator" class="py-20 bg-gray-200">
+      <div class="max-w-3xl mx-auto px-4 text-center">
+        <h2 class="text-3xl font-extrabold text-gray-800 mb-6">Create Your QR Code</h2>
+        <p class="mb-8 text-gray-600">Customize and generate your QR code with ease!</p>
+
+        <!-- QR Form -->
+        <div class="bg-purple-100 border border-purple-200 rounded-xl shadow-xl p-8">
+          <div class="mb-6 text-left">
+            <label class="block text-gray-700 mb-2 font-medium">Select Category:</label>
+            <select id="qr-category" class="w-full border border-gray-300 rounded-lg px-4 py-2 input-focus">
+              <option value="text">Text</option>
+              <option value="url">Website URL</option>
+              <option value="email">Email</option>
+              <option value="phone">Phone Number</option>
+            </select>
+          </div>
+
+          <div class="mb-6 text-left">
+            <label class="block text-gray-700 mb-2 font-medium">Select Date:</label>
+            <input id="qr-data" type="date" class="w-full border border-gray-300 rounded-lg px-4 py-2 input-focus" />
+          </div>
+
+          <div class="mb-6 text-left">
+            <label class="block text-gray-700 mb-2 font-medium">QR Code Size (px):</label>
+            <select id="qr-size" class="w-full border border-gray-300 rounded-lg px-4 py-2 input-focus">
+              <option value="100">100x100</option>
+              <option value="200" selected>200x200</option>
+              <option value="300">300x300</option>
+              <option value="400">400x400</option>
+            </select>
+          </div>
+
+          <div class="mb-6 text-left">
+            <label class="block text-gray-700 mb-2 font-medium">Error Correction Level:</label>
+            <select id="qr-error-level" class="w-full border border-gray-300 rounded-lg px-4 py-2 input-focus">
+              <option value="L">Low</option>
+              <option value="M">Medium</option>
+              <option value="Q">Quartile</option>
+              <option value="H" selected>High</option>
+            </select>
+          </div>
+
+          <div class="mb-6 text-left">
+            <label class="block text-gray-700 mb-2 font-medium">QR Code Color:</label>
+            <div class="color-picker-label">
+              <input id="qr-color" type="color" class="color-picker" value="#000000" />
+              <span class="text-gray-600">Select color</span>
+            </div>
+          </div>
+
+          <div class="mb-6 text-left">
+            <label class="block text-gray-700 mb-2 font-medium">Background Color:</label>
+            <div class="color-picker-label">
+              <input id="qr-bg-color" type="color" class="color-picker" value="#ffffff" />
+              <span class="text-gray-600">Select background color</span>
+            </div>
+          </div>
+
+          <div class="mb-6 text-left">
+            <label class="block text-gray-700 mb-2 font-medium">Upload Logo (optional):</label>
+            <input id="qr-logo" type="file" accept="image/*" class="w-full border border-gray-300 rounded-lg px-4 py-2 input-focus" />
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+            <button onclick="generateQR()" class="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-500 transition btn-primary">
+              Generate QR Code
+            </button>
+            <button onclick="downloadQR()" id="download-btn" class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-500 transition btn-primary hidden">
+              Download QR Code
+            </button>
+          </div>
+
+          <div id="qrcode" class="mt-8 flex justify-center qr-container"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-center py-6">
+      <p class="text-sm text-gray-300">© 2025 QR System. All rights reserved.</p>
+    </footer>
+
+    <!-- QRCode.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <!-- JS Script -->
+    <script>
+      feather.replace();
+
+      const menuBtn = document.getElementById("menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+
+      let qr;
+
+      function generateQR() {
+        const category = document.getElementById("qr-category").value;
+        const data = document.getElementById("qr-data").value.trim();
+        const size = parseInt(document.getElementById("qr-size").value);
+        const errorLevel = document.getElementById("qr-error-level").value;
+        const qrColor = document.getElementById("qr-color").value;
+        const qrBgColor = document.getElementById("qr-bg-color").value;
+        const logoFile = document.getElementById("qr-logo").files[0];
+        const qrOutput = document.getElementById("qrcode");
+        const downloadBtn = document.getElementById("download-btn");
+
+        if (!data) {
+          alert("Please select a valid date.");
+          return;
+        }
+
+        let formattedData;
+
+        switch (category) {
+          case "url":
+            formattedData = `https://example.com/date/${data}`;
+            break;
+          case "email":
+            formattedData = `mailto:example@qrsystem.com?subject=Date: ${data}`;
+            break;
+          case "phone":
+            formattedData = `tel:+1234567890 | Date: ${data}`;
+            break;
+          case "text":
+            formattedData = data;
+            break;
+        }
+
+        qrOutput.innerHTML = ""; // Clear previous
+        qr = new QRCode(qrOutput, {
+          text: formattedData,
+          width: size,
+          height: size,
+          colorDark: qrColor,
+          colorLight: qrBgColor,
+          correctLevel: QRCode.CorrectLevel[errorLevel],
+        });
+
+        // Add logo to QR code
+        setTimeout(() => {
+          const qrCanvas = document.querySelector('#qrcode canvas');
+          if (!qrCanvas) return;
+
+          const ctx = qrCanvas.getContext('2d');
+          let logo = new Image();
+          logo.crossOrigin = "Anonymous";
+
+          // Use uploaded logo if available, otherwise fallback to default image.png
+          if (logoFile) {
+            logo.src = URL.createObjectURL(logoFile);
+          } else {
+            logo.src = "image.png"; // Adjust path to your default logo image
+          }
+
+          logo.onload = () => {
+            const logoSize = size * 0.2; // Logo is 20% of QR code size
+            const x = (size - logoSize) / 2;
+            const y = (size - logoSize) / 2;
+
+            // Draw a white background square behind the logo for better visibility
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(x - 5, y - 5, logoSize + 10, logoSize + 10);
+
+            // Draw the logo
+            ctx.drawImage(logo, x, y, logoSize, logoSize);
+
+            // Clean up object URL if used
+            if (logoFile) URL.revokeObjectURL(logo.src);
+
+            qrOutput.classList.add("loaded");
+            downloadBtn.classList.remove("hidden");
+          };
+
+          logo.onerror = () => {
+            console.error("Failed to load logo image.");
+            qrOutput.classList.add("loaded");
+            downloadBtn.classList.remove("hidden"); // Show download button even if logo fails
+          };
+        }, 500);
+      }
+
+      function downloadQR() {
+        const qrCanvas = document.querySelector('#qrcode canvas');
+        if (!qrCanvas) return alert("Please generate a QR code first.");
+
+        const link = document.createElement('a');
+        link.href = qrCanvas.toDataURL("image/png");
+        link.download = "qr_code_with_logo.png";
+        link.click();
+      }
+    </script>
+  </body>
+</html>
