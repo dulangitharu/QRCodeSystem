@@ -280,7 +280,7 @@
         logo.onerror = () => {
           console.error("Failed to load logo image.");
           qrOutput.classList.add("loaded");
-          downloadBtn.classList.remove("hidden");
+          downloadBtn.classList.remove("hidden"); // Show download button even if logo fails
         };
       }, 500);
     }
