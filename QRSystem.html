@@ -297,7 +297,7 @@
 
     function downloadQR() {
       const qrCanvas = document.querySelector('#qrcode canvas');
-      if (!qrCanvas) return alert("Please generate a QR code first.");
+      if (!qrCanvas) return alert("Please Generate a QR Code First.");
 
       const link = document.createElement('a');
       link.href = qrCanvas.toDataURL("image/png");
